@@ -1,0 +1,37 @@
+.main {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 0.9rem;
+}
+.row {
+  display: flex;
+}
+.col-4 {
+  width: 33.333333%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-12 {
+  width: 100%;
+}
+.text-center {
+  text-align: center;
+}
+table {
+  font-family: 'Helvetica Neue', sans-serif;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.8rem;
+}
+th,
+td {
+  padding: 6px 8px;
+}
+th {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.font-bold {
+  font-weight: 700;
+}
