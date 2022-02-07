@@ -144,7 +144,7 @@
 
 <script>
 import LoadingSpinner from "../components/ui/LoadingSpinner.vue";
-import UserAddForm from "../components/UserAddEditForm.vue";
+import UserAddForm from "../components/forms/UserAddEditForm.vue";
 import ItemDetails from "../components/ItemDetails.vue";
 
 export default {

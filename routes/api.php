@@ -28,13 +28,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/change-password', [UserController::class, 'changePassword']);
 
     Route::post('/customers', [CustomerController::class, 'index']);
-    //    Route::get('/customer', [CustomerController::class, 'show']);
+    Route::get('/customer', [CustomerController::class, 'show']);
     Route::post('/customers/store', [CustomerController::class, 'store']);
     Route::put('/customers/update/{id}', [CustomerController::class, 'update']);
     Route::get('/customers/delete/{id}', [CustomerController::class, 'destroy']);
 
-    Route::get('/transactions/{id?}', [TransactionController::class, 'index']);
+    Route::get('/transactions', [TransactionController::class, 'index']);
+    Route::get('/transactions/{id}', [TransactionController::class, 'show']);
     Route::post('/transactions/store', [TransactionController::class, 'store']);
+    Route::put('/transactions/update/{id}', [TransactionController::class, 'update']);
     Route::post('/generate-ledger', [TransactionController::class, 'generateLedgerPdf']);
 });
 Route::get('/customer', [CustomerController::class, 'show']);

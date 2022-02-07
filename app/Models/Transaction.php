@@ -22,22 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\User $addedBy
  * @property-read \App\Models\Customer|null $customer
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\History[] $histories
- * @property-read int|null $histories_count
  * @property-read \App\Models\Receipt|null $receipt
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAddedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereCustomerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereDueAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereReceiptId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction find()
  * @mixin \Eloquent
  */
 class Transaction extends Model

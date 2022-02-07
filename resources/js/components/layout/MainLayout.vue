@@ -40,7 +40,7 @@
 
 <script>
 import Navigation from "./Navigation.vue";
-import LedgerForm from "../LedgerForm.vue";
+import LedgerForm from "../forms/LedgerForm.vue";
 
 export default {
   components: {

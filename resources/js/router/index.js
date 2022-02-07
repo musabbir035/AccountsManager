@@ -5,7 +5,8 @@ import Login from "../views/auth/Login.vue";
 import Users from "../views/Users.vue";
 import Customers from "../views/customer/Customers.vue";
 import CustomerDetails from "../views/customer/CustomerDetails.vue";
-import Transactions from "../views/Transactions.vue";
+import Transactions from "../views/transaction/Transactions.vue";
+import TransactionDetails from "../views/transaction/TransactionDetails.vue";
 import Receipts from "../views/Receipts.vue";
 
 Vue.use(VueRouter);
@@ -58,6 +59,12 @@ const routes = [
     name: "Transactions",
     component: Transactions,
     meta: { title: "Transactions" },
+  },
+  {
+    path: "/transactions/:id",
+    name: "TransactionDetails",
+    component: TransactionDetails,
+    meta: { title: "Transaction Details" },
   },
 ];
 

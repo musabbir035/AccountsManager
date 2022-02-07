@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Transaction;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource
@@ -14,7 +15,7 @@ class TransactionResource extends JsonResource
             'receipt_id' => $this->receipt_id,
             'description' => $this->description,
             'type_id' => $this->type,
-            'type' => $this->type === 1 ? trans('site.income') : trans('site.expense'),
+            'type' => $this->type === Transaction::$INCOME ? trans('site.income') : trans('site.expense'),
             'amount' => $this->amount,
             'due_amount' => $this->due_amount,
             'date' => date('M d, Y', strtotime($this->date)),

@@ -6,10 +6,12 @@ use App\Http\Requests\GenerateLedgerRequest;
 use App\Http\Requests\TransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Customer;
+use App\Models\History;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mpdf\Mpdf;
 
 class TransactionController extends Controller
@@ -32,13 +34,41 @@ class TransactionController extends Controller
 
         return response([
             'message' => trans('messages.transaction_added'),
-            'transaction' => $transaction
+            'transaction' => new TransactionResource($transaction)
+        ], 200);
+    }
+
+    public function show($id)
+    {
+        return response([
+            'message' => trans('messages.transaction_added'),
+            'transaction' => new TransactionResource(Transaction::find($id))
         ], 200);
     }
 
     public function update(TransactionRequest $request, $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+        $history = new History();
+        $history->action_by_id = Auth::id();
+        $history->old_value = json_encode($transaction);
+
+        try {
+            DB::transaction(function () use ($transaction, $history, $request) {
+                $transaction->update($request->validated());
+                $history->new_value = json_encode($transaction);
+                $transaction->histories()->save($history);
+            }, 3);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => trans('messages.something_wrong')
+            ], 500);
+        }
+
+        return response([
+            'message' => trans('messages.transaction_updated'),
+            'transaction' => new TransactionResource($transaction)
+        ], 200);
     }
 
     public function destroy($id)

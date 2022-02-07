@@ -157,7 +157,7 @@
 
 <script>
 import LoadingSpinner from "../../components/ui/LoadingSpinner.vue";
-import CustomerAddEditForm from "../../components/CustomerAddEditForm.vue";
+import CustomerAddEditForm from "../../components/forms/CustomerAddEditForm.vue";
 
 export default {
   components: {
