@@ -19,7 +19,6 @@ class TransactionRequest extends FormRequest
             'type' => 'required|integer|between:1,2',
             'date' => 'required|date_format:Y-m-d',
             'customer_id' => 'nullable|exists:customers,id',
-            'product_id' => 'nullable|exists:products,id',
             'receipt_id' => 'nullable|exists:receipts,id',
         ];
     }
@@ -34,7 +33,6 @@ class TransactionRequest extends FormRequest
             'date.required' => trans('validation.custom.date.required'),
             'date.date_format' => trans('validation.custom.date.date_format'),
             'customer_id.exists' => trans('validation.custom.customer_id.exists'),
-            'product_id.exists' => trans('validation.custom.product_id.exists'),
             'receipt_id.exists' => trans('validation.custom.receipt_id.exists')
         ];
     }

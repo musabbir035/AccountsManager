@@ -162,7 +162,14 @@ class TransactionController extends Controller
                     </tr>';
             }
 
-            $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
+            $fontdata = [
+                'bangla' => [
+                    'R' => 'SourceSansPro-Regular.ttf',
+                    'B' => 'SourceSansPro-Bold.ttf',
+                ],
+            ];
+
+            $pdf = new Mpdf($this->mpdfConfig());
             $pdf->SetHTMLHeader('<img src="img/header.png" alt="" style="width: 400px; margin: auto">');
             $pdf->SetHTMLFooter(
                 '<div style="text-align: right; font-size: .75rem">
@@ -231,12 +238,37 @@ class TransactionController extends Controller
                 2
             );
 
-            $pdf->Output($pdfName, 'I');
-            return response(['message' => 'Success', 200]);
+            $pdf->Output($pdfName, 'D');
+            //return response(['message' => 'Success', 200]);
         } catch (Exception $e) {
             return response([
-                'message' => 'Something went wrong'
+                //'message' => 'Something went wrong'
+                'message' => $e->getMessage()
+                //'message' => __DIR__ . public_path('ttfonts')
             ], 200);
         }
+    }
+
+    public function mpdfConfig()
+    {
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+
+        return [
+            'mode' => 'utf-8',
+            'format' => 'A4-P',
+            'fontDir' => array_merge($fontDirs, [
+                __DIR__ . public_path('ttfonts'),
+            ]),
+            'fontdata' => $fontData + [
+                'bangla' => [
+                    'R' => 'siyamrupali.ttf',
+                ]
+            ],
+            'default_font' => 'bangla'
+        ];
     }
 }

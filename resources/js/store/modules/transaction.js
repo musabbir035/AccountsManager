@@ -20,17 +20,17 @@ const getters = {
 
 const actions = {
   async getTransactions({ commit }, id) {
-    let url = '/api/transactions';
+    let url = "/api/transactions";
     if (id & !Number.isNaN(id)) {
-      url = '/api/transactions?customerId=' + id;
+      url = "/api/transactions?customerId=" + id;
     }
     return await axios
       .get(url)
       .then((res) => {
-        commit('setAllTransactions', res.data.transactions);
+        commit("setAllTransactions", res.data.transactions);
         commit(
-          'updateTransactionsCount',
-          res.data.transactions ? res.data.transactions.length : 0
+          "updateTransactionsCount",
+          state.transactions ? state.transactions.length : 0
         );
         return res;
       })
@@ -41,10 +41,10 @@ const actions = {
 
   async addTransaction({ commit }, transaction) {
     return await axios
-      .post('/api/transactions/store', transaction)
+      .post("/api/transactions/store", transaction)
       .then((res) => {
-        commit('addTransaction', res.data.transaction);
-        commit('updateTransactionsCount');
+        commit("addTransaction", res.data.transaction);
+        commit("updateTransactionsCount", 1);
         return res;
       })
       .catch((err) => {
@@ -54,9 +54,9 @@ const actions = {
 
   async editTransaction({ commit }, transaction) {
     return await axios
-      .put('/api/transactions/update/' + transaction.id, transaction)
+      .put("/api/transactions/update/" + transaction.id, transaction)
       .then((res) => {
-        commit('editTransaction', res.data.transaction);
+        commit("editTransaction", res.data.transaction);
         return res;
       })
       .catch((err) => {
@@ -66,9 +66,9 @@ const actions = {
 
   async deleteTransaction({ commit }, transaction) {
     return await axios
-      .get('/api/transactions/delete/' + transaction.id)
+      .get("/api/transactions/delete/" + transaction.id)
       .then((res) => {
-        commit('deleteTransaction', transaction);
+        commit("deleteTransaction", transaction);
         return res;
       })
       .catch((err) => {
@@ -78,13 +78,23 @@ const actions = {
 
   async generateLedger({ commit }, payload) {
     return await axios
-      .post('/api/generate-ledger', {
-        dateFrom: payload.dateFrom,
-        dateTo: payload.dateTo,
-        customerId: payload.customerId,
-      })
+      .post("/api/generate-ledger", payload, { responseType: "blob" })
       .then((res) => {
-        //        commit('deleteTransaction', transaction);
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(new Blob([res.data]));
+
+        let fileName = `${payload.dateFrom}_${
+          payload.dateTo
+        }_${Date.now()}.pdf`;
+        if (payload.customerId && !Number.isNaN(payload.customerId)) {
+          fileName = `${payload.customerId}_${payload.dateFrom}_${
+            payload.dateTo
+          }_${Date.now()}.pdf`;
+        }
+
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
         return res;
       })
       .catch((err) => {
@@ -109,7 +119,7 @@ const mutations = {
     }
   },
 
-  updateTransactionsCount: (state) => (state.transactionsCount += 1),
+  updateTransactionsCount: (state, count) => (state.transactionsCount += count),
 
   addTransaction: (state, transaction) => state.transactions.push(transaction),
 

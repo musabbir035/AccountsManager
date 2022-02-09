@@ -14,7 +14,7 @@
                   <b-form-input
                     id="customer"
                     name="customer"
-                    v-model="form.customerName"
+                    v-model="customerName"
                     :state="getValidationState(validationContext)"
                     aria-describedby="customer-live-feedback"
                     placeholder="Select a customer"
@@ -114,11 +114,11 @@ export default {
   data() {
     return {
       form: {
-        customerName: null,
         dateFrom: null,
         dateTo: null,
         customerId: null,
       },
+      customerName: null,
       errorMessage: null,
       showFullPageLoading: false,
     };
@@ -133,7 +133,6 @@ export default {
         .dispatch("generateLedger", this.form)
         .then((res) => {
           this.showFullPageLoading = false;
-          this.$emit("ledgerGenerated", res);
         })
         .catch((err) => {
           this.handleError(err);
@@ -150,7 +149,7 @@ export default {
   },
   watch: {
     selectedCustomer: function (newVal, oldVal) {
-      this.form.customerName = newVal.name;
+      this.customerName = newVal.name;
       this.form.customerId = newVal.id;
     },
   },

@@ -11,8 +11,8 @@ class TransactionFactory extends Factory
 {
     public function definition()
     {
-        $start = mktime(0, 0, 0, 1, 1, 2022);
-        $now = strtotime(date('y-m-d'));
+        $start = strtotime('-30 days');
+        $now = time();
         $bool = $this->faker->boolean(50);
         $rand = rand(1, 10000);
         return [

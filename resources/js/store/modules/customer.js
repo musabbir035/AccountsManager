@@ -7,12 +7,15 @@ const state = {
 const actions = {
   async getAllCustomers({ commit }, query) {
     return await axios
-      .post('/api/customers', {
+      .post("/api/customers", {
         query: query,
       })
       .then((res) => {
-        commit('setAllCustomers', res.data.customers);
-        commit('updateCustomersCount', state.customers.length);
+        commit("setAllCustomers", res.data.customers);
+        commit(
+          "updateCustomersCount",
+          state.customers ? state.customers.length : 0
+        );
         return res;
       })
       .catch((err) => {
@@ -22,9 +25,9 @@ const actions = {
 
   async getCustomer({ commit }, { getter, type }) {
     return await axios
-      .get('/api/customer?' + type + '=' + getter) //url example: /api/customer?id=1
+      .get("/api/customer?" + type + "=" + getter) //url example: /api/customer?id=1
       .then((res) => {
-        commit('setCustomer', res.data.customer);
+        commit("setCustomer", res.data.customer);
         return res;
       })
       .catch((err) => {
@@ -34,14 +37,14 @@ const actions = {
 
   async addCustomer({ commit }, payload) {
     return await axios
-      .post('/api/customers/store', payload, {
+      .post("/api/customers/store", payload, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        commit('addCustomer', res.data.customer);
-        commit('updateCustomersCount', 1);
+        commit("addCustomer", res.data.customer);
+        commit("updateCustomersCount", 1);
         return res;
       })
       .catch((err) => {
@@ -52,7 +55,7 @@ const actions = {
   async editCustomer({ commit }, payload) {
     return await axios
       .put(
-        '/api/customers/update/' + payload.id,
+        "/api/customers/update/" + payload.id,
         {
           name: payload.name,
           address: payload.address,
@@ -61,12 +64,12 @@ const actions = {
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       )
       .then((res) => {
-        commit('editCustomer', res.data.customer);
+        commit("editCustomer", res.data.customer);
         return res;
       })
       .catch((err) => {
@@ -76,9 +79,9 @@ const actions = {
 
   async deleteCustomer({ commit }, customer) {
     return await axios
-      .get('/api/customers/delete/' + customer.id)
+      .get("/api/customers/delete/" + customer.id)
       .then((res) => {
-        commit('deleteCustomer', customer);
+        commit("deleteCustomer", customer);
         return res;
       })
       .catch((err) => {
