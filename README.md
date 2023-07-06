@@ -3,7 +3,7 @@
 ## About Accounts Manager
 
 Accounts Manager is a single page application. The frontend is developed with Vue.js and the backend with Laravel. It can be used to store day to day business transactions, incomes, expenses, due payments and other types of transactions.<br>
-This app is far from complete.
+This app is not yet complete.
 
 ## Setup
 
